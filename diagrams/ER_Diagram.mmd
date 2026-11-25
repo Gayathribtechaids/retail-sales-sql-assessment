@@ -1,0 +1,49 @@
+erDiagram
+    REGIONS ||--o{ STORES : contains
+    STORES ||--o{ ORDERS : receives
+    CUSTOMERS ||--o{ ORDERS : places
+    ORDERS ||--|{ ORDERITEMS_CLEAN : contains
+    PRODUCTS ||--o{ ORDERITEMS_CLEAN : identifies
+    ORDERITEMS_CLEAN ||--o{ RETURNS : has
+
+    REGIONS {
+        int RegionID PK
+        varchar RegionName
+    }
+    STORES {
+        int StoreID PK
+        varchar StoreName
+        varchar RegionRaw
+        int RegionID FK
+    }
+    CUSTOMERS {
+        int CustomerID PK
+        varchar CustomerName
+        date SignupDate
+    }
+    ORDERS {
+        int OrderID PK
+        date OrderDate
+        int CustomerID FK
+        int StoreID FK
+        varchar OrderStatus
+    }
+    PRODUCTS {
+        int ProductID PK
+        varchar ProductName
+        varchar Category
+    }
+    ORDERITEMS_CLEAN {
+        int OrderItemID PK
+        int OrderID FK
+        int ProductID FK
+        int Quantity
+        decimal UnitPrice
+        datetime LoadedAt
+    }
+    RETURNS {
+        int ReturnID PK
+        int OrderItemID FK
+        date ReturnDate
+        int ReturnQuantity
+    }
